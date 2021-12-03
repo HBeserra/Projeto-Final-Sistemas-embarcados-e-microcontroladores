@@ -7,12 +7,15 @@
 #DEFINE     BANK_0      bcf   STATUS,RP0
 #DEFINE     BANK_1      bsf   STATUS,RP0
             ORG         0x00
-            goto        INICIO            ; pula para a linha 12 ; 10 1000 0000 1100
+            goto        SETUP_INIT            ; pula para a linha 12 ; 10 1000 0000 1100
             ORG         0x05
 
+SETUP_INIT  BANK_1                        ; Muda para o banco de memoria zero 
+            movlw       0x07
+            movwf       TRISA
+            clrf        TRISB
+INICIO      BANK_0
 
-
-INICIO      BANK_0                        ; Muda para o banco de memoria zero ; 01 0010 1000 0011
             movf        PORTB,0
             andlw       b'00000111',0
             movwf       CHAVES
