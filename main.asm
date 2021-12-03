@@ -59,10 +59,27 @@ LOOP_1      rlf         PORTB,1
             goto        INICIO
 
 
+
+EFECT_2_1   clrf        PORTB             ; Loop acendendo led e movendo para a esquerda
+LOOP_2      rlf         PORTB,1
+            bsf         PORTB,0
+            btfss       PORTB,7           
+            goto        LOOP_2
+            goto        INICIO
+
+EFECT_2_2   movlw       0xff
+            movwf       PORTB             ; Loop acendendo led e movendo para a esquerda
+LOOP_3      rrf         PORTB,1
+            bcf         PORTB,7
+            btfsc       PORTB,0           
+            goto        LOOP_3
+            goto        INICIO
+
 EFECT_3     movlw       0xff
             movwf       PORTB             ; Define todos os bits do PORTB como 1
 LOOP_4      RRF         PORTB
             bcf         PORTB,7           ; Define o ultimo bit como 0
             btfsc       PORTB,0           ; Termina o loop se o primeiro bit for zero
             goto        LOOP_4
+            goto        INICIO
 
