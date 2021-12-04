@@ -80,24 +80,21 @@ LOOP_1
 
 
 EFECT_2_1   
-            clrf        PORTB             ; Loop acendendo led e movendo para a esquerda
-LOOP_2      
-            rlf         PORTB,1
+                      ; Acendendo led e movendo para a esquerda      
+            call        DELAY_1S
+			rlf         PORTB,1
             bsf         PORTB,0
-            btfss       PORTB,7           
-            goto        LOOP_2
+
             goto        INICIO
 
 EFECT_2_2   
-            movlw       0xff
-            movwf       PORTB             ; Loop acendendo led e movendo para a esquerda
+        ; Apagando led e movendo para a direita
             bcf         STATUS,0
 LOOP_3      
-            rrf         PORTB,1
-            bcf         PORTB,7
-			call        DELAY_1S  
-            btfsc       PORTB,0         
-            goto        LOOP_3
+            call        DELAY_1S
+			rrf         PORTB,1
+            bcf         PORTB,7 
+            
             goto        INICIO
 
 EFECT_3     
