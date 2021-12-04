@@ -10,11 +10,13 @@
             
             ORG         0x00
             goto        SETUP_INIT   
+			ORG			0x04
+			retfie
             ORG         0x05
 
 SETUP_INIT  
             BANK_1                        ; Muda para o banco de memoria zero 
-            movlw       0x07
+            movlw       b'00000111'
             movwf       TRISA
             clrf        TRISB
 
@@ -66,7 +68,7 @@ EFECT_1
             bcf         STATUS,0
 LOOP_1      
             rlf         PORTB,1
-   			btfss		MSK_EFEITO,0
+   			btfss		MSK_EFEITO,0		; bit mascara do efeito alternancia entre os leds
             bsf         PORTB,0
 			movlw		0x01
 			xorwf		MSK_EFEITO,F
@@ -120,8 +122,8 @@ LED_ON
 
                                           ; 196*(1/(1000000/256)) = 0,501s  OBS: frequencia FOSC/4
 DELAY_1S                                  ; Timer0 Prescaler 256 Preset 60 = Periodo 0.0501s com loop de 10 vezes = 0.50s  
-            movlw       0x01
-            movwf       C
+            movlw       d'10'
+            movwf       CONT_TMR0
 LOOP_5
             bcf         INTCON,2          ; Reset da flag de interupção do Timer0
             movlw       d'60'             ; Inicia a contagem em 60       
